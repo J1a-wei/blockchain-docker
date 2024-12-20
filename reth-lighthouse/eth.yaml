@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  reth:
+    image: '${RETH_IMAGE}'
+    pull_policy: always
+    container_name: reth
+    restart: unless-stopped
+    stop_signal: SIGINT
+    stop_grace_period: 2m
+    ports:
+    - 30303:30303
+    - 30303:30303/udp
+    - 8545:8545
+    - 8546:8546
+    - 8551:8551
+    volumes:
+    - /data/reth:/data
+    command:
+    - node
+    - --chain=${NETWORK}
+    - --datadir=/data
+    - --peers-file=/data/peers.file
+    - --nat=extip:${PUBLIC_IP}
+    - --port=30303
+    - --http
+    - --http.addr=0.0.0.0
+    - --http.api=debug,eth,net,trace,txpool,web3,rpc,reth,ots
+    - --http.corsdomain=*
+    - --ws
+    - --ws.origins=*
+    - --ws.addr=0.0.0.0
+    - --ws.api=debug,eth,net,trace,txpool,web3,rpc,reth,ots
+    - --authrpc.addr=0.0.0.0
+    - --authrpc.jwtsecret=/data/jwt.hex
+    - --authrpc.port=8551
+  lighthouse:
+    image: '${LIGHTHOUSE_IMAGE}'
+    pull_policy: always
+    container_name: lighthouse
+    restart: unless-stopped
+    stop_grace_period: 2m
+    volumes:
+    - /data/lighthouse:/data
+    - /data/reth:/reth
+    - /data/state:/cp
+    ports:
+    - 8080:8080
+    - 9000:9000
+    - 9000:9000/udp
+    command:
+    - lighthouse
+    - bn
+    - --network=${NETWORK}
+    - --datadir=/data
+    - --execution-endpoint=http://reth:8551
+    - --execution-jwt=/reth/jwt.hex
+    - --http
+    - --http-allow-origin=*
+    - --http-port=8080
+    - --http-address=0.0.0.0
+    - --metrics
+    - --metrics-allow-origin=*
+    - --metrics-port=9090
+    - --metrics-address=0.0.0.0
+    - --enr-address=${PUBLIC_IP}
+    - --slots-per-restore-point=${SPRP}
+    - --historic-state-cache-size=${HSCS}
+    - --reconstruct-historic-states
+    - --disable-backfill-rate-limiting
+
