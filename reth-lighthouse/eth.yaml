@@ -11,8 +11,8 @@ services:
     ports:
     - 30303:30303
     - 30303:30303/udp
-    - 8545:8545
-    - 8546:8546
+    - 31545:8545
+    - 31546:8546
     - 8551:8551
     volumes:
     - /data/reth:/data
@@ -45,7 +45,7 @@ services:
     - /data/reth:/reth
     - /data/state:/cp
     ports:
-    - 8080:8080
+    - 31080:8080
     - 9000:9000
     - 9000:9000/udp
     command:
@@ -64,5 +64,7 @@ services:
     - --metrics-port=9090
     - --metrics-address=0.0.0.0
     - --enr-address=${PUBLIC_IP}
-    - --hierarchy-exponents=${SPRP}
+    - --hierarchy-exponents="0,5,7,11"
     - --historic-state-cache-size=${HSCS}
+    - --checkpoint-sync-url=${CHECKPOINT_URL}
+    - --allow-insecure-genesis-sync
