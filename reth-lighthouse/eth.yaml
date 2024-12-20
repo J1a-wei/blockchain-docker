@@ -64,8 +64,5 @@ services:
     - --metrics-port=9090
     - --metrics-address=0.0.0.0
     - --enr-address=${PUBLIC_IP}
-    - --slots-per-restore-point=${SPRP}
+    - --hierarchy-exponents=${SPRP}
     - --historic-state-cache-size=${HSCS}
-    - --reconstruct-historic-states
-    - --disable-backfill-rate-limiting
-
