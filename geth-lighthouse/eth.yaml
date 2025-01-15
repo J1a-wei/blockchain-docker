@@ -19,6 +19,7 @@ services:
     - 8545:8545
     - 8546:8546
     - 8551:8551
+    - 127.0.0.1:6060:6060
     volumes:
     - /data/geth:/data
     command:
@@ -65,6 +66,7 @@ services:
     - 8080:8080
     - 9000:9000
     - 9000:9000/udp
+    - 127.0.0.1:9090:9090
     command:
     - lighthouse
     - bn
