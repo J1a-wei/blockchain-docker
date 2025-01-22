@@ -42,7 +42,7 @@ services:
     - --authrpc.port=8551
     - --txlookuplimit=0
     - --nat=extip:${PUBLIC_IP}
-    - --maxpeers=300
+    - --maxpeers=50
     - --${NETWORK}
     - --syncmode=snap
     - --db.engine=leveldb
@@ -104,3 +104,4 @@ services:
     - ${MEV_RELAYS}
     - -addr 
     - 0.0.0.0:18550
+    - --request-timeout-getheader=150
