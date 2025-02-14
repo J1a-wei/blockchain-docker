@@ -89,6 +89,7 @@ services:
     - --purge-db
     - --disable-backfill-rate-limiting
     - --builder=http://mev-boost:18550
+    - --subscribe-all-subnets
   mev-boost: 
     image: ${MEV_IMAGE}
     pull_policy: always
