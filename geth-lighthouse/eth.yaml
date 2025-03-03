@@ -45,7 +45,6 @@ services:
     - --maxpeers=50
     - --${NETWORK}
     - --syncmode=snap
-    - --db.engine=leveldb
     - --metrics
     - --pprof
     - --pprof.addr=0.0.0.0
@@ -90,6 +89,7 @@ services:
     - --disable-backfill-rate-limiting
     - --builder=http://mev-boost:18550
     - --subscribe-all-subnets
+    - --target-peers=200
   mev-boost: 
     image: ${MEV_IMAGE}
     pull_policy: always
