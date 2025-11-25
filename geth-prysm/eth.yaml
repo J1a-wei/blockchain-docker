@@ -74,7 +74,6 @@ services:
     - --accept-terms-of-use
     - --execution-endpoint=http://geth:8551
     - --jwt-secret=/geth/jwt.hex
-    - --enable-debug-rpc-endpoints
     - --${NETWORK}
     - --accept-terms-of-use
     - --p2p-max-peers=160
